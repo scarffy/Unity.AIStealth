@@ -23,6 +23,8 @@ namespace Stealth.AI
 
         [Header("Navigation")]
         [SerializeField] private NavMeshAgent _navMeshAgent;
+        [SerializeField] private float _walkSpeed = 2f;
+        [SerializeField] private float _runSpeed = 4f;
 
         [Header("Waypoints")]
         [SerializeField] private Transform[] _waypoints;
@@ -51,11 +53,9 @@ namespace Stealth.AI
         private void UpdateBehaviour()
         {
             //! Update behaviour state here
-            //! Maybe use coroutine instead
-            switch(GuardState)
+            switch (GuardState)
             {
                 case EGuardState.Idle:
-                    Debug.Log("Invoke Idle state");
                     OnIdleState.Invoke();
                     break;
 
@@ -76,6 +76,8 @@ namespace Stealth.AI
 
         public NavMeshAgent GetNavMeshAgent => _navMeshAgent;
         public Transform[] Waypoints => _waypoints;
+        public float WalkSpeed => _walkSpeed;
+        public float RunSpeed => _runSpeed;
 
         public GuardIdle GetGuardIdle => _guardIdle;
     }

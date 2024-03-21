@@ -7,17 +7,17 @@ namespace Stealth.AI
 {
     public class GuardDetection : MonoBehaviour
     {
-        [SerializeField] public float _viewRadius = 15f;
-        [Range(0,360)]
-        [SerializeField] public float _viewAngle = 90f;
+        public float _viewRadius = 15f;
+        [Range(0, 360)]
+        public float _viewAngle = 90f;
 
         [Header("Layer Mask")]
         [SerializeField] private LayerMask _playerMask;
         [SerializeField] private LayerMask _obstacleMask;
 
         [Header("Player in range")]
-        [SerializeField] public bool _playerInRange = false;
-        [SerializeField] public Transform _playerPosition;
+        public bool _playerInRange = false;
+        public Transform _playerPosition;
 
         private Collider[] colliders;
 
@@ -53,6 +53,8 @@ namespace Stealth.AI
                     {
                         //! player is in range
                         //! stop patrol
+                        //! Invoke PlayerDetection
+                        //! Cache playerPosition
                         _playerInRange = true;
                         OnPlayerDetected.Invoke();
                         playerDetected = true; // Set the flag to true if player is detected

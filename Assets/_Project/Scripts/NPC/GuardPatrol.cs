@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 namespace Stealth.AI
-{ 
+{
     [RequireComponent(typeof(GuardController))]
     public class GuardPatrol : MonoBehaviour
     {
@@ -12,7 +12,6 @@ namespace Stealth.AI
 
         [Header("Waypoints")]
         private Transform[] _waypoints;
-        [SerializeField] private float _patrolSpeed = 2f;
 
         [Header("Debug")]
         [SerializeField] private int _currentWaypointIndex = 0;
@@ -32,12 +31,12 @@ namespace Stealth.AI
             }
         }
 
-        void Start()
+        private void Start()
         {
             _navMeshAgent = _guardController.GetNavMeshAgent;
             _waypoints = _guardController.Waypoints;
 
-            _navMeshAgent.speed = _patrolSpeed;
+            _navMeshAgent.speed = _guardController.WalkSpeed;
         }
 
         private void Update()
@@ -45,22 +44,19 @@ namespace Stealth.AI
             patrolling();
         }
 
-        public void StartPatrol()
+        private void StartPatrol()
         {
             if (_waypoints.Length == 0)
             {
                 Debug.LogWarning($"No waypoints assigned to patrol");
                 return;
             }
-            Debug.Log("Start patrol");
-
             _navMeshAgent.isStopped = false;
             _navMeshAgent.SetDestination(_waypoints[_currentWaypointIndex].position);
         }
 
         private void StopPatrol()
         {
-            Debug.Log("Stop patrol");
             _navMeshAgent.isStopped = true;
         }
 
@@ -71,7 +67,7 @@ namespace Stealth.AI
 
             if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
             {
-                //! Implement Idle
+                //! Implement Idle then move to next waypoint
 
                 _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Length;
                 _navMeshAgent.SetDestination(_waypoints[_currentWaypointIndex].position);
