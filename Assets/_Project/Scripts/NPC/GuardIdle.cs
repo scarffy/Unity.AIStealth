@@ -7,13 +7,13 @@ namespace Stealth.AI
 {
     public class GuardIdle : MonoBehaviour
     {
-        private const float _idleTime = 5f;
+        private const float _idleTime = 2.5f;
         [SerializeField] private float _idleTimeCount;
         [SerializeField] private bool _isIdle = false;
 
         [Header("Unity Events")]
         public UnityEvent OnTimeFinished;
- 
+
         private void Update()
         {
             if (_isIdle)
@@ -27,7 +27,7 @@ namespace Stealth.AI
                     // Reset idle state and time count
                     _isIdle = false;
                     _idleTimeCount = _idleTime;
-                    OnTimeFinished.Invoke();
+                    //OnTimeFinished.Invoke();
                 }
             }
         }
@@ -36,6 +36,11 @@ namespace Stealth.AI
         {
             _isIdle = true;
             _idleTimeCount = _idleTime;
+        }
+
+        public void StopIdle()
+        {
+            _isIdle = false;
         }
     }
 }

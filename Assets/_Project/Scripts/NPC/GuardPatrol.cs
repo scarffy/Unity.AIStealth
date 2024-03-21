@@ -37,6 +37,8 @@ namespace Stealth.AI
             _waypoints = _guardController.Waypoints;
 
             _navMeshAgent.speed = _guardController.WalkSpeed;
+
+            StopPatrol();
         }
 
         private void Update()

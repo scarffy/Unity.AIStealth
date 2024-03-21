@@ -5,8 +5,12 @@ using UnityEngine.Events;
 
 namespace Stealth.AI
 {
+    [RequireComponent(typeof(GuardController))]
     public class GuardDetection : MonoBehaviour
     {
+        [SerializeField] private GuardController _guardController;
+
+        [Header("Settings")]
         public float _viewRadius = 15f;
         [Range(0, 360)]
         public float _viewAngle = 90f;
@@ -17,9 +21,12 @@ namespace Stealth.AI
 
         [Header("Player in range")]
         public bool _playerInRange = false;
-        public Transform _playerPosition;
 
-        private Collider[] colliders;
+        [Header("Player position")]
+        public Transform _playerPosition;
+        public Vector3 _playerLastPosition;
+
+        [SerializeField] private Collider[] colliders;
 
         public UnityEvent OnPlayerDetected;
         public UnityEvent OnPlayerMissing;
@@ -30,45 +37,54 @@ namespace Stealth.AI
         }
 
         /// <summary>
-        /// Check if player is in view
+        /// Check surrounding
         /// </summary>
         private void DetectionView()
         {
             colliders = Physics.OverlapSphere(transform.position, _viewRadius, _playerMask);
-
-            bool playerDetected = false; // Flag to track if any player is detected
 
             for (int i = 0; i < colliders.Length; i++)
             {
                 Transform player = colliders[i].transform;
                 Vector3 playerDirection = (player.position - transform.position).normalized;
 
-                float angle = Vector3.Angle(transform.forward, playerDirection);
-
-                //! Detect if player is in front of guard
-                if (angle < _viewAngle / 2)
+                if (Vector3.Angle(transform.forward, playerDirection) < _viewAngle / 2)
                 {
                     float playerDistance = Vector3.Distance(transform.position, player.position);
+                    //! If nothing is blocking
                     if (!Physics.Raycast(transform.position, playerDirection, playerDistance, _obstacleMask))
                     {
-                        //! player is in range
-                        //! stop patrol
-                        //! Invoke PlayerDetection
-                        //! Cache playerPosition
                         _playerInRange = true;
-                        OnPlayerDetected.Invoke();
-                        playerDetected = true; // Set the flag to true if player is detected
                         _playerPosition = player;
+                        _playerLastPosition = player.position;
+
+                        _guardController.SetPlayerLastPosition(_playerLastPosition);
+
+                        //! This is call every frame. Revisit this
+                        _guardController.SetBehaviour(GuardController.EGuardState.Chase);
+                        //! This is call every frame. Revisit this
+                        OnPlayerDetected.Invoke();
+                    }
+                    else
+                    {
+                        _playerInRange = false;
+                        _guardController.SetPlayerLastPosition(_playerLastPosition);
+                        OnPlayerMissing.Invoke();
+                        Debug.Log("Player is missing");
+                    }
+
+                }
+                if (Vector3.Distance(transform.position, player.position) > _viewRadius)
+                {
+                    if (_playerInRange)
+                    {
+                        _playerInRange = false;
+                        _guardController.SetPlayerLastPosition(_playerLastPosition);
+                        OnPlayerMissing.Invoke();
                     }
                 }
             }
 
-            //! if no player is detected, invoke OnPlayerMissing event
-            if (!playerDetected)
-            {
-                _playerInRange = false;
-                OnPlayerMissing.Invoke();
-            }
         }
     }
 }
