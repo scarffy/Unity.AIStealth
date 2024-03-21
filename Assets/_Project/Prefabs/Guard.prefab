@@ -81,6 +81,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   OnIdleState:
     m_PersistentCalls:
       m_Calls:
@@ -139,6 +140,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2970078991918168513}
+        m_TargetAssemblyTypeName: Stealth.AI.GuardIdle, Assembly-CSharp
+        m_MethodName: StopIdle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   _player: {x: 0, y: 0, z: 0}
@@ -155,7 +168,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _guardController: {fileID: 7899519052682976379}
-  _navMeshAgent: {fileID: 0}
   _isChasing: 0
   _playerLastPosition: {x: 0, y: 0, z: 0}
   _playerPosition: {x: 0, y: 0, z: 0}
@@ -167,6 +179,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: Stealth.AI.GuardController, Assembly-CSharp
         m_MethodName: SetBehaviour
         m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2970078991918168513}
+        m_TargetAssemblyTypeName: Stealth.AI.GuardIdle, Assembly-CSharp
+        m_MethodName: SetIdle
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

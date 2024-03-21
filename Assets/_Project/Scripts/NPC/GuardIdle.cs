@@ -27,7 +27,7 @@ namespace Stealth.AI
                     // Reset idle state and time count
                     _isIdle = false;
                     _idleTimeCount = _idleTime;
-                    //OnTimeFinished.Invoke();
+                    OnTimeFinished.Invoke();
                 }
             }
         }

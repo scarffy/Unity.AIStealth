@@ -19,8 +19,9 @@ namespace Stealth.AI
         [SerializeField] private LayerMask _playerMask;
         [SerializeField] private LayerMask _obstacleMask;
 
-        [Header("Player in range")]
+        [Header("Player range detected")]
         public bool _playerInRange = false;
+        private bool _isPlayerMissing = false;
 
         [Header("Player position")]
         public Transform _playerPosition;
@@ -60,17 +61,11 @@ namespace Stealth.AI
 
                         _guardController.SetPlayerLastPosition(_playerLastPosition);
 
-                        //! This is call every frame. Revisit this
-                        _guardController.SetBehaviour(GuardController.EGuardState.Chase);
-                        //! This is call every frame. Revisit this
-                        OnPlayerDetected.Invoke();
+                        PlayerFound();
                     }
                     else
                     {
-                        _playerInRange = false;
-                        _guardController.SetPlayerLastPosition(_playerLastPosition);
-                        OnPlayerMissing.Invoke();
-                        Debug.Log("Player is missing");
+                        PlayerMissing();
                     }
 
                 }
@@ -78,13 +73,34 @@ namespace Stealth.AI
                 {
                     if (_playerInRange)
                     {
-                        _playerInRange = false;
-                        _guardController.SetPlayerLastPosition(_playerLastPosition);
-                        OnPlayerMissing.Invoke();
+                        PlayerMissing();
                     }
                 }
             }
+        }
 
+        private void PlayerMissing()
+        {
+            if (_isPlayerMissing)
+                return;
+
+            OnPlayerMissing.Invoke();
+            _playerInRange = false;
+            _guardController.SetPlayerLastPosition(_playerLastPosition);
+            _isPlayerMissing = true;
+        }
+
+        private void PlayerFound()
+        {
+            if (!_isPlayerMissing)
+                return;
+
+            //! This is call every frame. Revisit this
+            _guardController.SetBehaviour(GuardController.EGuardState.Chase);
+            //! This is call every frame. Revisit this
+            OnPlayerDetected.Invoke();
+
+            _isPlayerMissing = false;
         }
     }
 }

@@ -44,10 +44,11 @@ namespace Stealth.AI
         [Header("Reference")]
         [SerializeField] private Vector3 _player;
 
-        /// <summary>
-        /// Set guard behaviour state
-        /// </summary>
-        /// <param name="state">Guard state enum</param>
+        private void Start()
+        {
+            UpdateBehaviour();
+        }
+
         public void SetBehaviour(int state)
         {
             GuardState = (EGuardState)state;
