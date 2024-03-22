@@ -82,7 +82,6 @@ namespace Stealth.AI
                     OnChaseState.Invoke();
                     break;
             }
-            Debug.Log(GuardState);
         }
 
         public void SetPlayerLastPosition(Vector3 player)
