@@ -21,7 +21,7 @@ namespace Stealth.AI
         {
             Idle,
             Patrol,
-            Detect,
+            Investigate,
             Chase
         }
 
@@ -74,7 +74,7 @@ namespace Stealth.AI
                     OnPatrolState.Invoke();
                     break;
 
-                case EGuardState.Detect:
+                case EGuardState.Investigate:
                     OnInvestigateSound.Invoke();
                     break;
 
