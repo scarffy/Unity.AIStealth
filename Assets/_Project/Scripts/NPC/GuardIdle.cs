@@ -18,7 +18,7 @@ namespace Stealth.AI
         {
             if (_isIdle)
             {
-                if (_idleTimeCount > 0)
+                if (_idleTimeCount > 0.0f)
                 {
                     _idleTimeCount -= Time.deltaTime;
                 }
@@ -42,5 +42,7 @@ namespace Stealth.AI
         {
             _isIdle = false;
         }
+
+        public bool IsIdling => _isIdle;
     }
 }

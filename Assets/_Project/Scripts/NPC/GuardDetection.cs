@@ -27,7 +27,7 @@ namespace Stealth.AI
         public Transform _playerPosition;
         public Vector3 _playerLastPosition;
 
-        [SerializeField] private Collider[] colliders;
+        [SerializeField] private Collider[] _colliders;
 
         public UnityEvent OnPlayerDetected;
         public UnityEvent OnPlayerMissing;
@@ -42,11 +42,11 @@ namespace Stealth.AI
         /// </summary>
         private void DetectionView()
         {
-            colliders = Physics.OverlapSphere(transform.position, _viewRadius, _playerMask);
+            _colliders = Physics.OverlapSphere(transform.position, _viewRadius, _playerMask);
 
-            for (int i = 0; i < colliders.Length; i++)
+            for (int i = 0; i < _colliders.Length; i++)
             {
-                Transform player = colliders[i].transform;
+                Transform player = _colliders[i].transform;
                 Vector3 playerDirection = (player.position - transform.position).normalized;
 
                 if (Vector3.Angle(transform.forward, playerDirection) < _viewAngle / 2)

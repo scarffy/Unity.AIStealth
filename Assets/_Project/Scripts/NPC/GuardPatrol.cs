@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,6 +17,8 @@ namespace Stealth.AI
         [Header("Debug")]
         [SerializeField] private int _currentWaypointIndex = 0;
         private NavMeshAgent _navMeshAgent;
+
+        private bool _isIdle;
 
         [SerializeField] private bool _canPatrol;
         public bool canPatrol
@@ -47,17 +50,19 @@ namespace Stealth.AI
         private void StartPatrol()
         {
             if (_waypoints.Length == 0)
-            {
-                Debug.LogWarning($"No waypoints assigned to patrol");
                 return;
-            }
+
             _navMeshAgent.isStopped = false;
             _navMeshAgent.SetDestination(_waypoints[_currentWaypointIndex].position);
+
+            _guardController.GetGuardIdle.OnTimeFinished.AddListener(OnIdleFinished);
         }
 
         private void StopPatrol()
         {
             _navMeshAgent.isStopped = true;
+
+            _guardController.GetGuardIdle.OnTimeFinished.RemoveListener(OnIdleFinished);
         }
 
         private void patrolling()
@@ -67,7 +72,9 @@ namespace Stealth.AI
 
             if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
             {
-                //! Implement Idle then move to next waypoint
+                _isIdle = true;
+                _guardController.GetGuardIdle.SetIdle();
+                _navMeshAgent.isStopped = true;
 
                 _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Length;
                 _navMeshAgent.SetDestination(_waypoints[_currentWaypointIndex].position);
@@ -77,6 +84,12 @@ namespace Stealth.AI
         public void SetPatrol(bool setPatrol)
         {
             canPatrol = setPatrol;
+        }
+
+        private void OnIdleFinished()
+        {
+            _isIdle = false;
+            _navMeshAgent.isStopped = false;
         }
     }
 }

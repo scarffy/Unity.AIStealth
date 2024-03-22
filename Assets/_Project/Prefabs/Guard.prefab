@@ -10,12 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 2775523986820679886}
   - component: {fileID: 8088592725068567921}
+  - component: {fileID: 5765599064113325288}
   - component: {fileID: 7899519052682976379}
   - component: {fileID: 7208867820344566843}
   - component: {fileID: 5259351126932389916}
   - component: {fileID: 2969255383129621291}
+  - component: {fileID: 2213593084950965943}
   - component: {fileID: 2970078991918168513}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Guard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,6 +62,29 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &5765599064113325288
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4763910808809655479}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &7899519052682976379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,7 +139,19 @@ MonoBehaviour:
         m_CallState: 2
   OnInvestigateSound:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2213593084950965943}
+        m_TargetAssemblyTypeName: Stealth.AI.GuardInvestigate, Assembly-CSharp
+        m_MethodName: set_IsInvestigating
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnChaseState:
     m_PersistentCalls:
       m_Calls:
@@ -223,7 +260,7 @@ MonoBehaviour:
   _playerInRange: 0
   _playerPosition: {fileID: 0}
   _playerLastPosition: {x: 0, y: 0, z: 0}
-  colliders: []
+  _colliders: []
   OnPlayerDetected:
     m_PersistentCalls:
       m_Calls:
@@ -269,6 +306,19 @@ MonoBehaviour:
   _guardController: {fileID: 7899519052682976379}
   _currentWaypointIndex: 0
   _canPatrol: 0
+--- !u!114 &2213593084950965943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4763910808809655479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 074c06a7fa6c24d45b1c60fe3136deb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _guardController: {fileID: 7899519052682976379}
 --- !u!114 &2970078991918168513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,7 +361,7 @@ GameObject:
   - component: {fileID: 2703263338003065420}
   - component: {fileID: 8994337826330168811}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
