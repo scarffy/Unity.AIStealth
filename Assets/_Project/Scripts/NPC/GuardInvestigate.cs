@@ -11,7 +11,7 @@ namespace Stealth.AI
 
         private NavMeshAgent _navMeshMeshAgent;
 
-        private void Start()
+        private void Awake()
         {
             _navMeshMeshAgent = _guardController.GetNavMeshAgent;
         }

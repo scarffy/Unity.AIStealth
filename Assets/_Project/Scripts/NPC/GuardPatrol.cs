@@ -12,7 +12,7 @@ namespace Stealth.AI
         [SerializeField] private GuardController _guardController;
 
         [Header("Waypoints")]
-        private Transform[] _waypoints;
+        [SerializeField] private Transform[] _waypoints;
 
         [Header("Debug")]
         [SerializeField] private int _currentWaypointIndex = 0;
@@ -26,15 +26,19 @@ namespace Stealth.AI
             get => _canPatrol;
             private set
             {
+                Debug.Log("Setting Patrol State");
                 _canPatrol = value;
                 if (canPatrol)
+                {
+                    Debug.Log("Can Patrol");
                     StartPatrol();
+                }
                 else
                     StopPatrol();
             }
         }
 
-        private void Start()
+        private void Awake()
         {
             _navMeshAgent = _guardController.GetNavMeshAgent;
             _waypoints = _guardController.Waypoints;
@@ -50,19 +54,24 @@ namespace Stealth.AI
         private void StartPatrol()
         {
             if (_waypoints.Length == 0)
+            {
+                Debug.LogError("No waypoints are set");
                 return;
+            }
 
+            _navMeshAgent.speed = _guardController.WalkSpeed;
             _navMeshAgent.isStopped = false;
             _navMeshAgent.SetDestination(_waypoints[_currentWaypointIndex].position);
 
             _guardController.GetGuardIdle.OnTimeFinished.AddListener(OnIdleFinished);
+            Debug.Log("Start Patrol");
         }
 
         private void StopPatrol()
         {
-            _navMeshAgent.isStopped = true;
-
             _guardController.GetGuardIdle.OnTimeFinished.RemoveListener(OnIdleFinished);
+            _navMeshAgent.isStopped = true;
+            Debug.Log("Stop Patrol");
         }
 
         private void patrolling()
