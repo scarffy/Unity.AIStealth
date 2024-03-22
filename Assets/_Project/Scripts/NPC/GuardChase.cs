@@ -14,44 +14,60 @@ namespace Stealth.AI
 
         [Header("Debug")]
         [SerializeField] private bool _isChasing;
-        [SerializeField] private Vector3 _playerLastPosition;
         [SerializeField] private Vector3 _playerPosition;
 
         [SerializeField] private bool _caughtPlayer;
 
         public UnityEvent OnPlayerMissing;
 
-        private void Start()
+        private void Awake()
         {
             _navMeshAgent = _guardController.GetNavMeshAgent;
+        }
+
+        private void Update()
+        {
+            if (_isChasing)
+                Chasing();
         }
 
         public void SetChase(bool setChase)
         {
             _isChasing = setChase;
+
+            if (!_isChasing)
+            {
+                _navMeshAgent.isStopped = true;
+                // _guardController.GetGuardIdle.OnTimeFinished.AddListener(OnIdleFinished);
+            }
+            else
+            {
+                _navMeshAgent.isStopped = false;
+                _navMeshAgent.speed = _guardController.RunSpeed;
+                // _guardController.GetGuardIdle.OnTimeFinished.RemoveListener(OnIdleFinished);
+            }
+            Debug.Log($"Set Chase {_isChasing}");
         }
 
         public void Chasing()
         {
-            _playerLastPosition = Vector3.zero;
-
             //! Move to player position
-            if (!_caughtPlayer)
+            if (!_caughtPlayer && _isChasing)
             {
-                _navMeshAgent.isStopped = false;
-                _navMeshAgent.speed = _guardController.RunSpeed;
-                _navMeshAgent.SetDestination(_playerPosition);
+                _navMeshAgent.SetDestination(_guardController.GetPlayer);
             }
 
-            if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
+            if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance + 1)
             {
                 //! If player distance is more than x distance
-                if (Vector3.Distance(transform.position, _guardController.GetPlayer) >= 6f)
+                if (Vector3.Distance(transform.position, _guardController.GetPlayer) >= 5f)
                 {
-                    _navMeshAgent.isStopped = true;
+                    //! Stop chasing player
+                    SetChase(false);
 
-                    //! Do Idle
-                    _guardController.SetBehaviour(GuardController.EGuardState.Idle);
+                    //! Idle for a while
+
+                    //! Move behaviour state to next state
 
                     //! Invoke player missing
                     OnPlayerMissing.Invoke();
@@ -59,9 +75,16 @@ namespace Stealth.AI
                 //! Continue Chase last player position
                 else
                 {
-                    _navMeshAgent.SetDestination(_guardController.GetPlayer);
+                    if (Vector3.Distance(transform.position, _guardController.GetPlayer) >= 2.5f)
+                        SetChase(false);
+                    // _navMeshAgent.SetDestination(_guardController.GetPlayer);
                 }
             }
+        }
+
+        private void OnIdleFinished()
+        {
+
         }
     }
 }

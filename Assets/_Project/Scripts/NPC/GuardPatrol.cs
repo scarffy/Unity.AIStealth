@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,80 +7,70 @@ namespace Stealth.AI
     public class GuardPatrol : MonoBehaviour
     {
         [SerializeField] private GuardController _guardController;
-
-        [Header("Waypoints")]
         [SerializeField] private Transform[] _waypoints;
-
-        [Header("Debug")]
+        [SerializeField] private NavMeshAgent _navMeshAgent;
         [SerializeField] private int _currentWaypointIndex = 0;
-        private NavMeshAgent _navMeshAgent;
-
-        private bool _isIdle;
-
-        [SerializeField] private bool _canPatrol;
-        public bool canPatrol
-        {
-            get => _canPatrol;
-            private set
-            {
-                Debug.Log("Setting Patrol State");
-                _canPatrol = value;
-                if (canPatrol)
-                {
-                    Debug.Log("Can Patrol");
-                    StartPatrol();
-                }
-                else
-                    StopPatrol();
-            }
-        }
+        [SerializeField] private bool _canPatrol = false;
+        [SerializeField] private bool _isIdle = false;
+        [SerializeField] private bool _canDoIdle = false;
 
         private void Awake()
         {
-            _navMeshAgent = _guardController.GetNavMeshAgent;
-            _waypoints = _guardController.Waypoints;
-
-            _navMeshAgent.speed = _guardController.WalkSpeed;
+            Initialize();
         }
 
         private void Update()
         {
-            patrolling();
+            Patrolling();
+        }
+
+        private void Initialize()
+        {
+            if (_guardController != null)
+            {
+                _navMeshAgent = _guardController.GetNavMeshAgent;
+                _waypoints = _guardController.Waypoints;
+                _navMeshAgent.speed = _guardController.WalkSpeed;
+            }
         }
 
         private void StartPatrol()
         {
-            if (_waypoints.Length == 0)
-            {
-                Debug.LogError("No waypoints are set");
+            if (_waypoints.Length == 0 || !_canPatrol)
                 return;
-            }
 
             _navMeshAgent.speed = _guardController.WalkSpeed;
             _navMeshAgent.isStopped = false;
             _navMeshAgent.SetDestination(_waypoints[_currentWaypointIndex].position);
 
-            _guardController.GetGuardIdle.OnTimeFinished.AddListener(OnIdleFinished);
-            Debug.Log("Start Patrol");
+            if (!_isIdle && _guardController != null)
+            {
+                _guardController.GetGuardIdle.OnTimeFinished.AddListener(OnIdleFinished);
+            }
         }
 
         private void StopPatrol()
         {
-            _guardController.GetGuardIdle.OnTimeFinished.RemoveListener(OnIdleFinished);
+            if (_guardController != null && _isIdle)
+            {
+                _guardController.GetGuardIdle.OnTimeFinished.RemoveListener(OnIdleFinished);
+                _isIdle = false;
+            }
             _navMeshAgent.isStopped = true;
-            Debug.Log("Stop Patrol");
         }
 
-        private void patrolling()
+        private void Patrolling()
         {
-            if (!_canPatrol)
+            if (!_canPatrol || _canDoIdle && _isIdle && _guardController != null)
                 return;
 
             if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
             {
-                _isIdle = true;
-                _guardController.GetGuardIdle.SetIdle();
-                _navMeshAgent.isStopped = true;
+                if (_canDoIdle && _guardController != null)
+                {
+                    _guardController.GetGuardIdle.SetIdle();
+                    _navMeshAgent.isStopped = true;
+                }
 
                 _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Length;
                 _navMeshAgent.SetDestination(_waypoints[_currentWaypointIndex].position);
@@ -92,12 +79,16 @@ namespace Stealth.AI
 
         public void SetPatrol(bool setPatrol)
         {
-            canPatrol = setPatrol;
+            _canPatrol = setPatrol;
+
+            if (_canPatrol)
+                StartPatrol();
+            else
+                StopPatrol();
         }
 
         private void OnIdleFinished()
         {
-            _isIdle = false;
             _navMeshAgent.isStopped = false;
         }
     }

@@ -52,7 +52,6 @@ namespace Stealth.AI
                         {
                             controller.SetBehaviour(GuardController.EGuardState.Investigate);
                             controller.SetPlayerLastPosition(transform.position);
-                            Debug.Log("Found player Guard Component");
                         }
                         else
                         {

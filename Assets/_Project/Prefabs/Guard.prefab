@@ -54,7 +54,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -125,6 +125,18 @@ MonoBehaviour:
   OnPatrolState:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 7208867820344566843}
+        m_TargetAssemblyTypeName: Stealth.AI.GuardChase, Assembly-CSharp
+        m_MethodName: SetChase
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2969255383129621291}
         m_TargetAssemblyTypeName: Stealth.AI.GuardPatrol, Assembly-CSharp
         m_MethodName: SetPatrol
@@ -155,10 +167,10 @@ MonoBehaviour:
   OnChaseState:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2969255383129621291}
-        m_TargetAssemblyTypeName: Stealth.AI.GuardPatrol, Assembly-CSharp
-        m_MethodName: SetPatrol
-        m_Mode: 6
+      - m_Target: {fileID: 2970078991918168513}
+        m_TargetAssemblyTypeName: Stealth.AI.GuardIdle, Assembly-CSharp
+        m_MethodName: StopIdle
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -178,18 +190,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 2970078991918168513}
-        m_TargetAssemblyTypeName: Stealth.AI.GuardIdle, Assembly-CSharp
-        m_MethodName: StopIdle
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
         m_CallState: 2
   _player: {x: 0, y: 0, z: 0}
 --- !u!114 &7208867820344566843
@@ -218,19 +218,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2970078991918168513}
-        m_TargetAssemblyTypeName: Stealth.AI.GuardIdle, Assembly-CSharp
-        m_MethodName: SetIdle
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -278,17 +266,29 @@ MonoBehaviour:
   OnPlayerMissing:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7899519052682976379}
-        m_TargetAssemblyTypeName: Stealth.AI.GuardController, Assembly-CSharp
-        m_MethodName: SetBehaviour
-        m_Mode: 3
+      - m_Target: {fileID: 7208867820344566843}
+        m_TargetAssemblyTypeName: Stealth.AI.GuardChase, Assembly-CSharp
+        m_MethodName: SetChase
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2969255383129621291}
+        m_TargetAssemblyTypeName: Stealth.AI.GuardPatrol, Assembly-CSharp
+        m_MethodName: SetPatrol
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &2969255383129621291
 MonoBehaviour:
@@ -303,8 +303,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _guardController: {fileID: 7899519052682976379}
+  _waypoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _navMeshAgent: {fileID: 8088592725068567921}
   _currentWaypointIndex: 0
   _canPatrol: 0
+  _isIdle: 0
+  _canDoIdle: 0
 --- !u!114 &2213593084950965943
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -52,6 +52,7 @@ namespace Stealth.AI
                 if (Vector3.Angle(transform.forward, playerDirection) < _viewAngle / 2)
                 {
                     float playerDistance = Vector3.Distance(transform.position, player.position);
+
                     //! If nothing is blocking
                     if (!Physics.Raycast(transform.position, playerDirection, playerDistance, _obstacleMask))
                     {
@@ -67,14 +68,11 @@ namespace Stealth.AI
                     {
                         PlayerMissing();
                     }
-
                 }
+
                 if (Vector3.Distance(transform.position, player.position) > _viewRadius)
                 {
-                    if (_playerInRange)
-                    {
-                        PlayerMissing();
-                    }
+                    PlayerMissing();
                 }
             }
         }
@@ -84,10 +82,11 @@ namespace Stealth.AI
             if (_isPlayerMissing)
                 return;
 
-            OnPlayerMissing.Invoke();
+            _isPlayerMissing = true;
             _playerInRange = false;
             _guardController.SetPlayerLastPosition(_playerLastPosition);
-            _isPlayerMissing = true;
+            _guardController.SetBehaviour(GuardController.EGuardState.Patrol);
+            OnPlayerMissing.Invoke();
         }
 
         private void PlayerFound()
@@ -95,9 +94,7 @@ namespace Stealth.AI
             if (!_isPlayerMissing)
                 return;
 
-            //! This is call every frame. Revisit this
             _guardController.SetBehaviour(GuardController.EGuardState.Chase);
-            //! This is call every frame. Revisit this
             OnPlayerDetected.Invoke();
 
             _isPlayerMissing = false;
