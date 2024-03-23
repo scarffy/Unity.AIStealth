@@ -6,14 +6,9 @@ namespace Stealth.AI
 {
     public class GuardVisualCue : MonoBehaviour
     {
-        [SerializeField] private GuardDetection _guardDetection;
+        [SerializeField] private GuardController _guardController;
 
-        private void Start()
-        {
-            if (_guardDetection == null)
-                Debug.Log($"[Visual] Guard detection reference is not found");
-
-        }
+        [SerializeField] private GameObject[] _visualCueList;
 
         private void Update()
         {
@@ -26,9 +21,32 @@ namespace Stealth.AI
             transform.rotation = Quaternion.LookRotation(directionToCamera);
         }
 
-        private void SetVisualCue()
+        public void SetVisualCue(int behaviour)
         {
+            SetVisualCue((GuardController.EGuardState)behaviour);
+        }
 
+        public void SetVisualCue(GuardController.EGuardState behaviour)
+        {
+            foreach (var item in _visualCueList)
+                item.SetActive(false);
+
+
+            switch (behaviour)
+            {
+                case GuardController.EGuardState.Idle:
+                    _visualCueList[0].SetActive(true);
+                    break;
+                case GuardController.EGuardState.Patrol:
+                    _visualCueList[0].SetActive(true);
+                    break;
+                case GuardController.EGuardState.Investigate:
+                    _visualCueList[1].SetActive(true);
+                    break;
+                case GuardController.EGuardState.Chase:
+                    _visualCueList[2].SetActive(true);
+                    break;
+            }
         }
     }
 }

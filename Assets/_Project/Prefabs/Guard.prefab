@@ -648,7 +648,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1405745744253181031}
   m_Layer: 8
-  m_Name: GuardStateVisual_3
+  m_Name: GuardStateVisual_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -795,6 +795,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8932285722467539301}
+        m_TargetAssemblyTypeName: Stealth.AI.GuardVisualCue, Assembly-CSharp
+        m_MethodName: SetVisualCue
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnPatrolState:
     m_PersistentCalls:
       m_Calls:
@@ -822,6 +834,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 8932285722467539301}
+        m_TargetAssemblyTypeName: Stealth.AI.GuardVisualCue, Assembly-CSharp
+        m_MethodName: SetVisualCue
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   OnInvestigateSound:
     m_PersistentCalls:
       m_Calls:
@@ -833,6 +857,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 8932285722467539301}
+        m_TargetAssemblyTypeName: Stealth.AI.GuardVisualCue, Assembly-CSharp
+        m_MethodName: SetVisualCue
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
@@ -860,6 +896,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 8932285722467539301}
+        m_TargetAssemblyTypeName: Stealth.AI.GuardVisualCue, Assembly-CSharp
+        m_MethodName: SetVisualCue
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
@@ -1026,7 +1074,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1861426345979572592}
   m_Layer: 8
-  m_Name: GuardStateVisual_1
+  m_Name: GuardStateVisual_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1059,7 +1107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3265669074253900452}
   m_Layer: 8
-  m_Name: GuardStateVisual_2
+  m_Name: GuardStateVisual_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1113,9 +1161,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1405745744253181031}
   - {fileID: 1861426345979572592}
   - {fileID: 3265669074253900452}
-  - {fileID: 1405745744253181031}
   m_Father: {fileID: 2775523986820679886}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8932285722467539301
@@ -1130,6 +1178,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86ff925d468bc65498b9776ecf88743e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _guardController: {fileID: 7899519052682976379}
+  _visualCueList:
+  - {fileID: 4196699730500893354}
+  - {fileID: 4840925852421653200}
+  - {fileID: 5414577701862128780}
 --- !u!1 &5944835291758231543
 GameObject:
   m_ObjectHideFlags: 0
