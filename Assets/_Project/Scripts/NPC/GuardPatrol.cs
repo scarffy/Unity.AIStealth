@@ -7,11 +7,14 @@ namespace Stealth.AI
     public class GuardPatrol : MonoBehaviour
     {
         [SerializeField] private GuardController _guardController;
-        [SerializeField] private Transform[] _waypoints;
-        [SerializeField] private NavMeshAgent _navMeshAgent;
-        [SerializeField] private int _currentWaypointIndex = 0;
-        [SerializeField] private bool _canPatrol = false;
-        [SerializeField] private bool _isIdle = false;
+        [Header("Guard Waypoint")]
+        private Transform[] _waypoints;
+        private NavMeshAgent _navMeshAgent;
+        private int _currentWaypointIndex = 0;
+        private bool _canPatrol = false;
+        private bool _isIdle = false;
+
+        [Header("Settings")]
         [SerializeField] private bool _canDoIdle = false;
 
         private void Awake()
@@ -31,6 +34,10 @@ namespace Stealth.AI
                 _navMeshAgent = _guardController.GetNavMeshAgent;
                 _waypoints = _guardController.Waypoints;
                 _navMeshAgent.speed = _guardController.WalkSpeed;
+            }
+            else
+            {
+                Debug.Log($"[AI] Guard controller is null");
             }
         }
 

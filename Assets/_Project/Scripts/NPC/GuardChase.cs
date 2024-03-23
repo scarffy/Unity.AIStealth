@@ -12,17 +12,19 @@ namespace Stealth.AI
         [SerializeField] private GuardController _guardController;
         private NavMeshAgent _navMeshAgent;
 
-        [Header("Debug")]
-        [SerializeField] private bool _isChasing;
-        [SerializeField] private Vector3 _playerPosition;
+        private bool _isChasing;
+        private Vector3 _playerPosition;
 
         [SerializeField] private bool _caughtPlayer;
 
+        [Header("Unity Events")]
+        [Space]
         public UnityEvent OnPlayerMissing;
 
         private void Awake()
         {
-            _navMeshAgent = _guardController.GetNavMeshAgent;
+            if (_guardController != null)
+                _navMeshAgent = _guardController.GetNavMeshAgent;
         }
 
         private void Update()
@@ -46,7 +48,6 @@ namespace Stealth.AI
                 _navMeshAgent.speed = _guardController.RunSpeed;
                 // _guardController.GetGuardIdle.OnTimeFinished.RemoveListener(OnIdleFinished);
             }
-            Debug.Log($"Set Chase {_isChasing}");
         }
 
         public void Chasing()
@@ -66,8 +67,6 @@ namespace Stealth.AI
                     SetChase(false);
 
                     //! Idle for a while
-
-                    //! Move behaviour state to next state
 
                     //! Invoke player missing
                     OnPlayerMissing.Invoke();

@@ -17,23 +17,24 @@ namespace Stealth.AI
         private Mesh _viewConeMesh;
         private MeshFilter _meshFilter;
 
-        void Start()
+        private void Awake()
         {
+            _viewRadius = _guardDetection._viewRadius;
+            _viewAngle = _guardDetection._viewAngle;
+
             gameObject.AddComponent<MeshRenderer>().material = _viewConeMaterial;
             _meshFilter = gameObject.AddComponent<MeshFilter>();
             _viewConeMesh = new Mesh();
             _viewAngle *= Mathf.Deg2Rad;
 
-            _viewRadius = _guardDetection._viewRadius;
-            _viewAngle = _guardDetection._viewAngle;
         }
 
-        void Update()
+        private void Update()
         {
             CreateVisionCone();
         }
 
-        void CreateVisionCone()
+        private void CreateVisionCone()
         {
             int[] triangles = new int[(_viewConeResolution - 1) * 3];
             Vector3[] vertices = new Vector3[_viewConeResolution + 1];
@@ -73,7 +74,5 @@ namespace Stealth.AI
             _viewConeMesh.triangles = triangles;
             _meshFilter.mesh = _viewConeMesh;
         }
-
-
     }
 }

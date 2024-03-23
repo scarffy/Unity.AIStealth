@@ -9,6 +9,7 @@ namespace Stealth.AI
     /// Holds all relevant data related to Guard
     /// </summary>
     [DisallowMultipleComponent]
+    [RequireComponent(typeof(NavMeshAgent))]
     public class GuardController : MonoBehaviour
     {
         [SerializeField] private GuardIdle _guardIdle;
@@ -29,17 +30,18 @@ namespace Stealth.AI
         [SerializeField] private float _walkSpeed = 2f;
         [SerializeField] private float _runSpeed = 4f;
 
-        [Header("Waypoints")]
+        [Header("Patrol Waypoints")]
         [SerializeField] private Transform[] _waypoints;
 
-        [Header("Guard State")]
+        [Header("Guard Event State")]
+        [Space]
         public UnityEvent OnIdleState;
         public UnityEvent OnPatrolState;
         public UnityEvent OnInvestigateSound;
         public UnityEvent OnChaseState;
 
         [Header("Reference")]
-        [SerializeField] private Vector3 _player;
+        private Vector3 _player;
 
         private void Start()
         {

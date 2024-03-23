@@ -11,7 +11,8 @@ namespace Stealth.AI
         [SerializeField] private float _idleTimeCount;
         [SerializeField] private bool _isIdle = false;
 
-        [Header("Unity Events")]
+        [Header("Unity Finished Event")]
+        [Space]
         public UnityEvent OnTimeFinished;
 
         private void Update()

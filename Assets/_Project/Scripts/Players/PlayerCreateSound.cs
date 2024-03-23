@@ -17,9 +17,9 @@ namespace Stealth.AI
         [SerializeField] private LayerMask _obstacleMask;
 
         [Header("Guard Position")]
-        [SerializeField] private Collider[] _guardColliders;
-        public Transform[] _guardList;
-        public bool _guardInRange;
+        private Collider[] _guardColliders;
+        private Transform[] _guardList;
+        private bool _guardInRange;
 
         private void Update()
         {

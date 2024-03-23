@@ -20,15 +20,17 @@ namespace Stealth.AI
         [SerializeField] private LayerMask _obstacleMask;
 
         [Header("Player range detected")]
-        public bool _playerInRange = false;
+        [HideInInspector] public bool _playerInRange = false;
         private bool _isPlayerMissing = false;
 
         [Header("Player position")]
-        public Transform _playerPosition;
-        public Vector3 _playerLastPosition;
+        [HideInInspector] public Transform _playerPosition;
+        [HideInInspector] public Vector3 _playerLastPosition;
 
-        [SerializeField] private Collider[] _colliders;
+        private Collider[] _colliders;
 
+        [Header("Detection Events")]
+        [Space]
         public UnityEvent OnPlayerDetected;
         public UnityEvent OnPlayerMissing;
 

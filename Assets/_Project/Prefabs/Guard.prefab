@@ -156,7 +156,7 @@ MonoBehaviour:
   _viewConeMaterial: {fileID: 2100000, guid: 9da8befe8896b7e4886623f706dfa4d4, type: 2}
   _viewLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 449
   _viewConeResolution: 120
 --- !u!1 &424731251780776434
 GameObject:
@@ -963,7 +963,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  _player: {x: 0, y: 0, z: 0}
 --- !u!114 &5259351126932389916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -988,7 +987,6 @@ MonoBehaviour:
   _playerInRange: 0
   _playerPosition: {fileID: 0}
   _playerLastPosition: {x: 0, y: 0, z: 0}
-  _colliders: []
   OnPlayerDetected:
     m_PersistentCalls:
       m_Calls:
@@ -1075,16 +1073,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _guardController: {fileID: 7899519052682976379}
-  _waypoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  _navMeshAgent: {fileID: 8088592725068567921}
-  _currentWaypointIndex: 0
-  _canPatrol: 0
-  _isIdle: 0
-  _canDoIdle: 0
+  _canDoIdle: 1
 --- !u!114 &2213593084950965943
 MonoBehaviour:
   m_ObjectHideFlags: 0
