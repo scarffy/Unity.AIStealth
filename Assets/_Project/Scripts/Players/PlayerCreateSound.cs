@@ -53,10 +53,6 @@ namespace Stealth.AI
                             controller.SetBehaviour(GuardController.EGuardState.Investigate);
                             controller.SetPlayerLastPosition(transform.position);
                         }
-                        else
-                        {
-                            Debug.Log("No player Guard Component");
-                        }
                     }
                     else
                     {
