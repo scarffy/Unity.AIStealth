@@ -15,7 +15,7 @@ namespace Stealth.AI
         private bool _isChasing;
         private Vector3 _playerPosition;
 
-        [SerializeField] private bool _caughtPlayer;
+        private bool _caughtPlayer;
 
         [Header("Unity Events")]
         [Space]
